@@ -67,7 +67,7 @@ ReactDom.render(
 	document.getElementById('root')
 )*/
 
-var Search = createReactClass({
+/*var Search = createReactClass({
 	getInitialState : function () {
 		return {
 			value : 'please input'
@@ -89,5 +89,78 @@ var Search = createReactClass({
 
 ReactDom.render(
 	<Search/>,
+	document.getElementById('root')
+)*/
+
+var Mask = createReactClass({
+	render : function () {
+		console.log(this.props)
+		var styles = {
+			position : 'absolute',
+			left : 0,
+			top : 0,
+			right: 0,
+			bottom : 0,
+			background : 'black',
+			opacity : 0.5,
+			display : 'block'
+		}
+		if(this.props.show){
+			styles.display = 'block';
+		}else{
+			styles.display = 'none';
+		}
+		return (
+			<div style={styles}>
+				{this.props.children}
+			</div>
+		)
+	}
+});
+
+var Dialog = createReactClass({
+	
+	render : function () {
+		console.log(this.props)
+		var ban = {
+			width : '100%',
+			lineHeight: '200px',
+			heigth:'200px',
+			textAlign : 'center',
+			color:'#fff',
+			background:'orange',
+			fontSize : '50px',
+			cursor: 'pointer'
+		}
+		return (
+			<div>
+				<Mask show={this.props.show}>
+					<div style={ban} onClick={this.props.onShowClick}>Hello World</div>
+				</Mask> 
+			</div>
+		)
+	}
+})
+
+var App = createReactClass({
+	getInitialState : function () {
+       return {
+           show : true
+	   }
+	},
+	onHandleClick : function (){
+		this.setState({show:false})
+	},
+	render : function () {
+		console.log(this)
+		return (
+			<div>
+				<Dialog show={this.state.show} onShowClick={this.onHandleClick}/>
+			</div>
+		)
+	}
+})
+ReactDom.render(
+	<App/>,
 	document.getElementById('root')
 )
